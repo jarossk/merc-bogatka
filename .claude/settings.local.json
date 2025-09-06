@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scripts/setup-plan.sh:*)",
+      "Bash(scripts/update-agent-context.sh:*)",
+      "Bash(scripts/check-task-prerequisites.sh:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
