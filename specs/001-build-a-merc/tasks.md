@@ -117,7 +117,7 @@
 - [ ] **T067** Service completion notifications with email integration
 
 ## Phase 3.8: Mercedes-Benz OEM Compliance
-- [ ] **T068** VIN validation service with Mercedes-Benz database lookup in `src/lib/vin-validation.ts`
+- [ ] **T068** Mercedes-Benz VIN validation service using official Developer API in `src/lib/vin-validation.ts`
 - [ ] **T069** OEM-compliant service record generation in `src/lib/service-record.ts`
 - [ ] **T070** Digital signature component for technicians in `src/components/signature/digital-signature.tsx`
 - [ ] **T071** PDF generation for service reports using Appwrite Functions in `src/lib/pdf-generator.ts`

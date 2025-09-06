@@ -213,8 +213,9 @@ NEXT_PUBLIC_APPWRITE_URL=https://your-appwrite-instance.com
 NEXT_PUBLIC_APPWRITE_PROJECT_ID=your-project-id
 APPWRITE_API_KEY=your-api-key
 
-# Mercedes-Benz Integration
-MB_VIN_API_KEY=your-vin-validation-key
+# Mercedes-Benz Developer API Integration
+MB_DEVELOPER_API_KEY=your-mercedes-developer-api-key
+MB_VIN_VALIDATION_URL=https://api.mercedes-benz.com/vehicle_specifications/v1
 MB_COMPLIANCE_VERSION=2025.1
 
 # Notifications

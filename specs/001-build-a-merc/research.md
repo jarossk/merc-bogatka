@@ -37,16 +37,23 @@
 ### 3. Integration with Existing Mercedes-Benz Systems
 **Research Task**: Identify required integrations with OEM systems
 
-**Decision**: Start with standalone system, plan future integrations via Appwrite Functions
+**Decision**: Integrate Mercedes-Benz Developer API for VIN decoding and vehicle specifications
 **Rationale**:
-- Most service centers operate independently of Mercedes-Benz central systems
-- VIN lookup can use public APIs (NHTSA, manufacturer databases)
-- Parts inventory integration can be added via webhook functions
-- OEM compliance focuses on documentation format, not system integration
+- Official Mercedes-Benz Vehicle Specification API provides authentic vehicle data
+- VIN decoding returns precise model details, equipment, and service requirements  
+- API integration ensures OEM-compliant vehicle identification
+- Real-time vehicle data supports accurate service planning and parts ordering
+- Developer portal suggests commercial availability for service center applications
+
+**Implementation Plan**:
+- Mercedes-Benz Developer API for VIN decoding (primary)
+- Fallback to NHTSA API for basic VIN validation
+- Cache vehicle data in Appwrite Database to reduce API calls
+- Implement via Appwrite Functions for secure API key management
 
 **Alternatives considered**:
-- Mercedes-Benz API integration: Not publicly available, requires dealer partnership
-- Third-party automotive APIs: Expensive, complex licensing for multi-tenant
+- Public VIN APIs only: Less accurate for Mercedes-specific service requirements
+- No VIN integration: Manual vehicle data entry increases errors and compliance risk
 
 ### 4. Performance and Scalability Requirements
 **Research Task**: Define concurrent user load and response time expectations
