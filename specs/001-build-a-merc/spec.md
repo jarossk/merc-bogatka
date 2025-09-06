@@ -1,9 +1,9 @@
-# Feature Specification: Merc Auto Garage Workshop Management System
+# Feature Specification: Merc Auto Bogatka Workshop Management System
 
 **Feature Branch**: `001-build-a-merc`  
 **Created**: 2025-09-06  
 **Status**: Draft  
-**Input**: User description: "Build a \"Merc Auto Garage\" app. It's a workshop management tool for Mercedes-Benz service centers. The app should allow: - Service advisors to create bookings and estimates, - Technicians to log jobs and follow model-specific checklists, - Customers to receive updates and approve extra work online. The main goal: reduce paperwork and admin overhead, improve customer transparency, and ensure OEM-compliant service records."
+**Input**: User description: "Build a \"Merc Auto Bogatka\" app. It's a workshop management tool for Mercedes-Benz service centers. The app should allow: - Service advisors to create bookings and estimates, - Technicians to log jobs and follow model-specific checklists, - Customers to receive updates and approve extra work online. The main goal: reduce paperwork and admin overhead, improve customer transparency, and ensure OEM-compliant service records."
 
 ## Execution Flow (main)
 ```

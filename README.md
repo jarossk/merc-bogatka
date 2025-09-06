@@ -1,4 +1,4 @@
-# Merc Auto Garage 🚗⚙️
+# Merc Auto Bogatka 🚗⚙️
 
 **Workshop Management System for Mercedes-Benz Service Centers**
 
@@ -11,7 +11,7 @@ A modern web application built with **Next.js 15** and **Appwrite** that streaml
 
 ## 🎯 Overview
 
-Merc Auto Garage eliminates paperwork and admin overhead while improving customer transparency through:
+Merc Auto Bogatka eliminates paperwork and admin overhead while improving customer transparency through:
 
 - **Service Advisors**: Create bookings, generate estimates, track service progress
 - **Technicians**: Follow model-specific checklists, log job progress with digital signatures
@@ -51,7 +51,7 @@ Merc Auto Garage eliminates paperwork and admin overhead while improving custome
 
 ### **Project Structure**
 ```
-merc-bogatka-garage/
+merc-auto-bogatka/
 ├── src/
 │   ├── app/                 # Next.js 15 App Router
 │   ├── components/          # Shadcn/ui components
