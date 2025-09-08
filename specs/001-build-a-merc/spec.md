@@ -12,10 +12,10 @@
 2. Extract key concepts from description
    → ✅ Identified: actors (service advisors, technicians, customers), actions (bookings, estimates, job logging, updates), data (service records), constraints (OEM compliance)
 3. For each unclear aspect:
-   → [NEEDS CLARIFICATION: Authentication method and user account management not specified]
+   → ✅ Authentication: Appwrite email/password with role-based access (service advisors, technicians, customers)
    → [NEEDS CLARIFICATION: Data retention and backup requirements not specified]
-   → [NEEDS CLARIFICATION: Integration with existing Mercedes-Benz systems not defined]
-   → [NEEDS CLARIFICATION: Performance and scalability requirements not specified]
+   → ✅ Integration: Mercedes-Benz Developer API for VIN decoding and vehicle specifications, Allegro API for parts listing and inventory
+   → ✅ Performance: 50-100 concurrent users, <200ms page load, 10k+ service records annually
 4. Fill User Scenarios & Testing section
    → ✅ Clear user flows identified for all three user types
 5. Generate Functional Requirements
@@ -85,10 +85,11 @@ A Mercedes-Benz service center operates efficiently with minimal paperwork where
 - **FR-008**: System MUST maintain audit trail of all service activities for compliance purposes
 - **FR-009**: System MUST prevent unauthorized access to customer and vehicle data
 - **FR-010**: System MUST support multiple concurrent bookings and technician assignments
-- **FR-011**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, company directory?]
+- **FR-011**: System MUST authenticate users via Appwrite email/password authentication with role-based access control (service advisors, technicians, customers)
 - **FR-012**: System MUST retain service records for [NEEDS CLARIFICATION: retention period not specified - legal compliance requirements?]
-- **FR-013**: System MUST integrate with [NEEDS CLARIFICATION: existing Mercedes-Benz systems not specified - parts inventory, warranty systems, customer databases?]
-- **FR-014**: System MUST handle [NEEDS CLARIFICATION: concurrent user load not specified - how many advisors/technicians simultaneously?]
+- **FR-013**: System MUST integrate with Mercedes-Benz Developer API for VIN decoding and official vehicle specifications
+- **FR-015**: System MUST integrate with Allegro API to display available Mercedes-Benz parts with current pricing and inventory status
+- **FR-014**: System MUST handle 50-100 concurrent users with <200ms page load times and support 10k+ service records annually
 
 ### Key Entities *(include if feature involves data)*
 - **Customer**: Represents vehicle owners with contact information, service history, and communication preferences
@@ -98,6 +99,7 @@ A Mercedes-Benz service center operates efficiently with minimal paperwork where
 - **Job**: Individual work assignments for technicians with status tracking and time logging
 - **Checklist**: Model-specific service procedures mandated by Mercedes-Benz OEM standards
 - **Service Record**: Complete documentation of performed services for warranty and compliance purposes
+- **Part**: Mercedes-Benz parts available through Allegro API with pricing, availability, and compatibility information
 
 ---
 

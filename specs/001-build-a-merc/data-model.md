@@ -1,40 +1,40 @@
 # Data Model: Merc Auto Garage
 
 **Phase**: 1 (Design & Contracts)  
-**Date**: 2025-09-06  
+**Date**: 2025-09-07 (Updated to match actual implementation)  
 **Database**: Appwrite Database (MariaDB) via Coolify deployment
+**Database ID**: `68bd62a8000016ba6f75`
 
 ## Entity Definitions
 
 ### Customer
+**Collection ID**: `68bd9672003c26009089`
 **Purpose**: Represents vehicle owners who bring their Mercedes-Benz vehicles for service
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `email`: string (required, unique)
-- `firstName`: string (required)
-- `lastName`: string (required)
-- `phone`: string (required)
-- `address`: object
-  - `street`: string
-  - `city`: string
-  - `postalCode`: string
-  - `country`: string (default: "Germany")
-- `communicationPreferences`: object
-  - `email`: boolean (default: true)
-  - `sms`: boolean (default: false)
-  - `push`: boolean (default: true)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `email`: email (required, unique, max 200 chars)
+- `firstName`: string (required, max 100 chars)
+- `lastName`: string (required, max 100 chars)
+- `phone`: string (required, max 20 chars)
+- `address`: string (JSON object, max 2000 chars, default: `{}`)
+  - Example: `{"street": "Königsallee 123", "city": "Düsseldorf", "postalCode": "40212", "country": "Germany"}`
+- `communicationPreferences`: string (JSON object, max 1000 chars, default: `{"email":true,"sms":false,"push":true}`)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- One-to-many with Vehicle
-- One-to-many with Booking
+- `owned_vehicles` → Vehicle collection (one-to-many)
+- `bookings` → Booking collection (one-to-many)
+
+**Indexes**:
+- `email_unique` (unique index on email field)
 
 **Validation Rules**:
 - Email must be valid format
-- Phone must be valid German/international format
+- Phone must be valid German/international format  
 - GDPR consent required for data storage
+- JSON fields must be valid JSON format
 
 **State Transitions**:
 - Active → Inactive (after 2 years no service)
@@ -43,73 +43,81 @@
 ---
 
 ### Vehicle
+**Collection ID**: `68bd969e002c66b609db`
 **Purpose**: Mercedes-Benz vehicles registered in the system with service history
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `vin`: string (required, unique, 17 characters)
-- `customerId`: string (required, foreign key to Customer)
-- `make`: string (default: "Mercedes-Benz")
-- `model`: string (required, e.g., "C-Class", "E-Class")
-- `modelYear`: number (required)
-- `engine`: string (e.g., "2.0L Turbo", "3.5L V6")
-- `transmission`: string (e.g., "Automatic", "Manual")
-- `fuelType`: string (e.g., "Gasoline", "Diesel", "Hybrid", "Electric")
-- `mileage`: number (current odometer reading)
-- `color`: string
-- `licensePlate`: string
-- `lastServiceDate`: datetime (nullable)
-- `nextServiceDue`: datetime (nullable)
-- `warrantyExpiration`: datetime (nullable)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `vin`: string (required, unique, exactly 17 chars)
+- `make`: string (optional, max 50 chars, default: "Mercedes-Benz")
+- `model`: string (required, max 50 chars, e.g., "C-Class", "E-Class")
+- `modelYear`: integer (required, range: 1990-2026)
+- `engine`: string (optional, max 100 chars, e.g., "2.0L Turbo", "3.5L V6")
+- `transmission`: string (optional, max 50 chars, e.g., "Automatic", "Manual")
+- `fuelType`: string (optional, max 20 chars, e.g., "Gasoline", "Diesel", "Hybrid", "Electric")
+- `mileage`: integer (optional, >= 0, current odometer reading)
+- `color`: string (optional, max 30 chars)
+- `licensePlate`: string (optional, max 20 chars)
+- `lastServiceDate`: datetime (optional)
+- `nextServiceDue`: datetime (optional)
+- `warrantyExpiration`: datetime (optional)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- Many-to-one with Customer
-- One-to-many with Booking
-- One-to-many with ServiceRecord
+- `owner` → Customer collection (many-to-one)
+- `bookings` → Booking collection (one-to-many)
+- `service_records` → ServiceRecord collection (one-to-many)
+
+**Indexes**:
+- `vin_unique` (unique index on VIN field)
 
 **Validation Rules**:
 - VIN must be valid 17-character format
 - VIN must validate against Mercedes-Benz VIN database
-- Model year must be reasonable (1990-current+1)
-- Mileage must be positive number
+- Model year must be reasonable (1990-2026)
+- Mileage must be positive number or null
 
 ---
 
 ### Booking
+**Collection ID**: `bookings`
 **Purpose**: Service appointments linking customers, vehicles, and requested services
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `bookingNumber`: string (auto-generated, e.g., "MB-2025-001234")
-- `customerId`: string (required, foreign key to Customer)
-- `vehicleId`: string (required, foreign key to Vehicle)
-- `serviceAdvisorId`: string (required, foreign key to User)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `bookingNumber`: string (optional, max 32 chars, auto-generated)
 - `scheduledDate`: datetime (required)
-- `scheduledTime`: time (required)
-- `estimatedDuration`: number (minutes)
-- `status`: string (enum: "scheduled", "confirmed", "in-progress", "completed", "cancelled")
-- `priority`: string (enum: "normal", "high", "emergency")
-- `serviceType`: string[] (e.g., ["maintenance", "repair", "inspection"])
-- `customerNotes`: string (nullable)
-- `internalNotes`: string (nullable)
-- `estimatedCost`: number (nullable)
-- `actualCost`: number (nullable)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `scheduledTime`: datetime (required)
+- `estimatedDuration`: double (optional, in minutes)
+- `status`: enum (optional, default: "scheduled")
+  - Values: `["scheduled", "confirmed", "in-progress", "completed", "cancelled"]`
+- `priority`: enum (optional, default: "normal")
+  - Values: `["normal", "high", "emergency"]`
+- `serviceType`: string[] (optional, max 32 chars each, e.g., ["maintenance", "repair", "inspection"])
+- `customerNotes`: string (optional, max 1000 chars, default: "")
+- `internalNotes`: string (optional, max 1000 chars, default: "")
+- `estimatedCost`: integer (optional, currency amount)
+- `actualCost`: double (optional, currency amount)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- Many-to-one with Customer
-- Many-to-one with Vehicle
-- Many-to-one with User (service advisor)
-- One-to-many with Job
-- One-to-many with Estimate
+- `customer` → Customer collection (many-to-one)
+- `vehicle` → Vehicle collection (many-to-one)
+- `service_advisor` → User collection (many-to-one)
+- `jobs` → Job collection (one-to-many)
+- `estimates` → Estimate collection (one-to-many)
+
+**Indexes**:
+- `status_index_new` (index on status field)
+- `scheduled_date_index` (index on scheduledDate field)
 
 **Validation Rules**:
 - Scheduled date/time must be in future
 - Service advisor must have "advisor" role
 - Status transitions must follow workflow
+- Enum values must match defined constraints
 
 **State Transitions**:
 - scheduled → confirmed (customer confirmation)
@@ -120,67 +128,68 @@
 ---
 
 ### User
+**Collection ID**: `users`
 **Purpose**: Service center staff (advisors, technicians, admin) with role-based access
 
 **Fields**:
-- `id`: string (Appwrite user ID)
-- `email`: string (required, unique)
-- `firstName`: string (required)
-- `lastName`: string (required)
-- `role`: string (enum: "admin", "advisor", "technician", "customer")
-- `employeeId`: string (nullable, for staff)
-- `specializations`: string[] (for technicians, e.g., ["engine", "electrical", "transmission"])
-- `isActive`: boolean (default: true)
-- `lastLogin`: datetime (nullable)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `$id`: string (Appwrite user ID, auto-generated)
+- `email`: email (required, unique, email format)
+- `firstName`: string (required, max 100 chars)
+- `lastName`: string (required, max 100 chars)
+- `role`: enum (required)
+  - Values: `["admin", "advisor", "technician", "customer"]`
+- `employeeId`: string (optional, max 32 chars, for staff)
+- `isActive`: boolean (optional, default: true)
+- `lastLogin`: datetime (optional)
+- `specializations`: string[] (optional, max 32 chars each, for technicians)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- One-to-many with Booking (as service advisor)
-- One-to-many with Job (as assigned technician)
+- `assigned_bookings` → Booking collection (one-to-many, as service advisor)
+- `assigned_jobs` → Job collection (one-to-many, as technician)
+- `created_estimates` → Estimate collection (one-to-many, as creator)
 
 **Validation Rules**:
 - Email must be valid format
 - Role must be one of allowed values
 - Employee ID required for non-customer roles
+- Enum values must match defined constraints
 
 ---
 
 ### Job
+**Collection ID**: `jobs`
 **Purpose**: Individual work assignments for technicians with status tracking
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `jobNumber`: string (auto-generated, e.g., "JOB-2025-001234")
-- `bookingId`: string (required, foreign key to Booking)
-- `assignedTechnicianId`: string (required, foreign key to User)
-- `checklistId`: string (required, foreign key to Checklist)
-- `title`: string (required, e.g., "Engine Oil Change")
-- `description`: string (detailed work description)
-- `status`: string (enum: "pending", "in-progress", "completed", "on-hold", "cancelled")
-- `priority`: string (enum: "low", "normal", "high", "critical")
-- `estimatedHours`: number
-- `actualHours`: number (nullable)
-- `laborRate`: number (per hour)
-- `parts`: object[] (parts used)
-  - `partNumber`: string
-  - `description`: string
-  - `quantity`: number
-  - `unitCost`: number
-- `startTime`: datetime (nullable)
-- `endTime`: datetime (nullable)
-- `technicianNotes`: string (nullable)
-- `customerApprovalRequired`: boolean (for additional work)
-- `customerApproved`: boolean (nullable)
-- `approvalTimestamp`: datetime (nullable)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `jobNumber`: string (required, max 32 chars, auto-generated)
+- `title`: string (optional, max 200 chars, default: "")
+- `description`: string (optional, max 2000 chars, default: "")
+- `status`: enum (required)
+  - Values: `["pending", "in-progress", "completed", "on-hold", "cancelled"]`
+- `priority`: enum (optional)
+  - Values: `["low", "normal", "high", "critical"]`
+- `estimatedHours`: integer (optional, in hours)
+- `actualHours`: integer (optional, in hours)
+- `laborRate`: integer (optional, currency per hour)
+- `parts`: string (optional, JSON array, max 3000 chars, default: `"[]"`)  
+  - Example: `[{"partNumber":"A0001234567","description":"Engine Oil Filter","quantity":1,"unitCost":25.50}]`
+- `startTime`: datetime (optional)
+- `endTime`: datetime (optional)
+- `technicianNotes`: string (optional, max 1000 chars, default: "")
+- `customerApprovalRequired`: boolean (optional)
+- `customerApproved`: boolean (optional)
+- `approvalTimestamp`: datetime (optional)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- Many-to-one with Booking
-- Many-to-one with User (technician)
-- Many-to-one with Checklist
-- One-to-one with ServiceRecord (when completed)
+- `booking` → Booking collection (many-to-one)
+- `assigned_technician` → User collection (many-to-one)
+- `checklist` → Checklist collection (many-to-one)
+- `service_record` → ServiceRecord collection (one-to-one)
 
 **Validation Rules**:
 - Assigned technician must have "technician" role
@@ -197,29 +206,22 @@
 ---
 
 ### Checklist
+**Collection ID**: `checklists`
 **Purpose**: Model-specific service procedures mandated by Mercedes-Benz OEM standards
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `name`: string (required, e.g., "C-Class A-Service Checklist")
-- `vehicleModel`: string (required, e.g., "C-Class")
-- `serviceType`: string (required, e.g., "A-Service", "B-Service", "Repair")
-- `version`: string (required, e.g., "2025.1")
-- `isActive`: boolean (default: true)
-- `items`: object[] (checklist items)
-  - `id`: string (item ID)
-  - `title`: string
-  - `description`: string
-  - `category`: string (e.g., "engine", "brakes", "electrical")
-  - `required`: boolean
-  - `estimatedMinutes`: number
-  - `tools`: string[] (required tools)
-  - `parts`: string[] (commonly needed parts)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `name`: string (optional, max 200 chars, default: "")
+- `vehicleModel`: string (required, max 32 chars)
+- `serviceType`: string (required, max 32 chars)
+- `version`: string (required, max 32 chars)
+- `isActive`: boolean (optional)
+- `items`: string[] (optional, max 64 chars each, checklist items as JSON array)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- One-to-many with Job
+- `jobs` → Job collection (one-to-many)
 
 **Validation Rules**:
 - Vehicle model must be valid Mercedes-Benz model
@@ -229,35 +231,31 @@
 ---
 
 ### Estimate
+**Collection ID**: `estimates`
 **Purpose**: Cost calculations for services including labor, parts, and additional work
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `estimateNumber`: string (auto-generated)
-- `bookingId`: string (required, foreign key to Booking)
-- `createdBy`: string (required, foreign key to User)
-- `status`: string (enum: "draft", "pending", "approved", "rejected", "expired")
+- `$id`: string (Appwrite document ID, auto-generated)
+- `estimateNumber`: string (optional, max 64 chars, auto-generated)
+- `status`: enum (optional, default: "draft")
+  - Values: `["draft", "pending", "approved", "rejected", "expired"]`
 - `validUntil`: datetime (required)
-- `lineItems`: object[]
-  - `type`: string (enum: "labor", "parts", "other")
-  - `description`: string
-  - `quantity`: number
-  - `unitCost`: number
-  - `totalCost`: number
-- `subtotal`: number
-- `tax`: number
-- `total`: number
-- `customerMessage`: string (nullable)
-- `approvalDeadline`: datetime (nullable)
-- `approvedAt`: datetime (nullable)
-- `rejectedAt`: datetime (nullable)
-- `rejectionReason`: string (nullable)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `lineItems`: string (optional, JSON array, max 5000 chars, default: `"[]"`)  
+  - Example: `[{"type":"labor","description":"Engine Oil Change","quantity":1,"unitCost":50.00,"totalCost":50.00}]`
+- `subtotal`: integer (optional, currency)
+- `tax`: integer (optional, currency)
+- `total`: double (optional, currency)
+- `customerMessage`: string (optional, max 254 chars)
+- `approvalDeadline`: datetime (optional)
+- `approvedAt`: datetime (optional)
+- `rejectedAt`: datetime (optional)
+- `rejectionReason`: string (optional, max 500 chars, default: "")
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- Many-to-one with Booking
-- Many-to-one with User (creator)
+- `booking` → Booking collection (many-to-one)
+- `created_by_user` → User collection (many-to-one)
 
 **Validation Rules**:
 - Valid until date must be in future
@@ -273,49 +271,35 @@
 ---
 
 ### ServiceRecord
+**Collection ID**: `service_records`
 **Purpose**: Complete OEM-compliant documentation of performed services
 
 **Fields**:
-- `id`: string (Appwrite document ID)
-- `recordNumber`: string (auto-generated, e.g., "SR-2025-001234")
-- `vehicleId`: string (required, foreign key to Vehicle)
-- `bookingId`: string (required, foreign key to Booking)
-- `jobId`: string (required, foreign key to Job)
+- `$id`: string (Appwrite document ID, auto-generated)
+- `recordNumber`: string (required, max 32 chars, auto-generated)
 - `serviceDate`: datetime (required)
-- `mileageAtService`: number (required)
-- `serviceType`: string (required)
-- `workPerformed`: string (detailed description)
-- `partsUsed`: object[] (parts replacement record)
-  - `partNumber`: string
-  - `partName`: string
-  - `manufacturer`: string
-  - `quantity`: number
-  - `warrantyPeriod`: string
-- `technicianSignature`: string (digital signature)
-- `qualityControlCheck`: object
-  - `performedBy`: string (technician ID)
-  - `checkDate`: datetime
-  - `passed`: boolean
-  - `notes`: string
-- `customerNotified`: boolean
-- `warrantyUpdated`: boolean
-- `nextServiceRecommendation`: object
-  - `type`: string
-  - `recommendedDate`: datetime
-  - `mileageInterval`: number
-- `complianceCertification`: object
-  - `oemCompliant`: boolean
-  - `standardsVersion`: string
-  - `certifiedBy`: string
-- `pdfGenerated`: boolean (service report PDF)
-- `pdfUrl`: string (nullable, Appwrite Storage URL)
-- `createdAt`: datetime (auto)
-- `updatedAt`: datetime (auto)
+- `mileageAtService`: integer (required, >= 0)
+- `serviceType`: string (required, max 32 chars)
+- `workPerformed`: string (optional, max 2000 chars, default: "")
+- `partsUsed`: string[] (optional, max 32 chars each, parts as JSON array)
+- `technicianSignature`: string (optional, max 500 chars, default: "")
+- `qualityControlCheck`: string[] (optional, max 32 chars each, QC data as JSON array)
+- `customerNotified`: boolean (optional)
+- `warrantyUpdated`: boolean (optional)
+- `nextServiceRecommendation`: string[] (optional, max 32 chars each)
+- `complianceCertification`: string[] (optional, max 32 chars each, compliance data)
+- `pdfGenerated`: boolean (optional)
+- `pdfUrl`: string (optional, max 254 chars)
+- `$createdAt`: datetime (auto-generated)
+- `$updatedAt`: datetime (auto-generated)
 
 **Relationships**:
-- Many-to-one with Vehicle
-- Many-to-one with Booking
-- One-to-one with Job
+- `vehicle` → Vehicle collection (many-to-one)
+- `booking` → Booking collection (many-to-one)  
+- `job` → Job collection (one-to-one)
+
+**Indexes**:
+- `service_date_index` (index on serviceDate field)
 
 **Validation Rules**:
 - Service date cannot be in future
@@ -327,22 +311,34 @@
 
 ## Database Schema Summary
 
-**Collections** (Appwrite Database):
-1. customers (Customer entities)
-2. vehicles (Vehicle entities) 
-3. bookings (Booking entities)
-4. users (User entities, synced with Appwrite Auth)
-5. jobs (Job entities)
-6. checklists (Checklist entities)
-7. estimates (Estimate entities)
-8. service_records (ServiceRecord entities)
+**Collections** (Appwrite Database `68bd62a8000016ba6f75`):
+1. Customer (ID: `68bd9672003c26009089`) - Vehicle owners and service customers
+2. Vehicle (ID: `68bd969e002c66b609db`) - Mercedes-Benz vehicles in system  
+3. bookings - Service appointments
+4. users - Staff (advisors, technicians, admin)
+5. jobs - Individual work assignments
+6. checklists - OEM service procedures
+7. estimates - Cost calculations for services
+8. service_records - Complete service documentation
 
-**Indexes Required**:
-- customers: email (unique)
-- vehicles: vin (unique), customerId
-- bookings: customerId, vehicleId, status, scheduledDate
-- jobs: bookingId, assignedTechnicianId, status
-- service_records: vehicleId, serviceDate
+**Implemented Indexes**:
+- Customer: `email_unique` (unique index on email)
+- Vehicle: `vin_unique` (unique index on VIN)
+- Booking: `status_index_new` (index on status), `scheduled_date_index` (index on scheduledDate)
+- ServiceRecord: `service_date_index` (index on serviceDate)
+
+**Relationships** (10 bidirectional relationships):
+- Customer ↔ Vehicle (owner/owned_vehicles)
+- Customer ↔ Booking (customer/bookings)
+- Vehicle ↔ Booking (vehicle/bookings)
+- Vehicle ↔ ServiceRecord (vehicle/service_records)
+- User ↔ Booking (service_advisor/assigned_bookings)
+- Booking ↔ Job (booking/jobs)
+- Booking ↔ Estimate (booking/estimates)
+- User ↔ Job (assigned_technician/assigned_jobs)
+- Checklist ↔ Job (checklist/jobs)
+- Job ↔ ServiceRecord (job/service_record)
+- User ↔ Estimate (created_by_user/created_estimates)
 
 **Storage Buckets**:
 - service-documents (PDFs, photos, signatures)
