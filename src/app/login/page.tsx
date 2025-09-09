@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,16 +18,15 @@ const loginSchema = z.object({
     .string()
     .min(1, 'Password is required')
     .min(6, 'Password must be at least 6 characters'),
-  rememberMe: z.boolean().default(false),
+  rememberMe: z.boolean().optional().default(false),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 /**
- * Login page for Mercedes-Benz Workshop Management System
- * Provides email/password authentication with role-based access
+ * Login form component that uses search params
  */
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, isLoading } = useAuth();
@@ -41,7 +40,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema) as any,
     defaultValues: {
       email: '',
       password: '',
@@ -62,7 +61,7 @@ export default function LoginPage() {
       });
 
       // Redirect to intended page or dashboard
-      router.push(redirectTo);
+      window.location.href = redirectTo;
     } catch (err) {
       console.error('Login failed:', err);
       setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
@@ -241,12 +240,12 @@ export default function LoginPage() {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Need an account?{' '}
-                <Link
+                <a
                   href="/register"
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Contact your administrator
-                </Link>
+                </a>
               </p>
             </div>
           </form>
@@ -263,5 +262,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Login page for Mercedes-Benz Workshop Management System
+ * Provides email/password authentication with role-based access
+ */
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

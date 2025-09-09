@@ -243,7 +243,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold mb-4">Obszary Obsługi</h3>
                   <ul className="space-y-2 text-gray-600">
-                    <li>• Dzielnica Stuttgart i okolice</li>
+                    <li>• Gdańsk i okolice</li>
                     <li>• Mobilne usługi diagnostyczne</li>
                     <li>• Organizacja holowania przy większych naprawach</li>
                     <li>• Usługa odbioru i dostawy</li>

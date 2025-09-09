@@ -81,13 +81,14 @@ function getRequiredRoles(pathname: string): string[] {
 function getSessionFromCookies(request: NextRequest) {
   // Appwrite stores session in cookies with prefix 'a_session_'
   const cookies = request.cookies;
-  const sessionCookies = [];
+  const sessionCookies: { name: string; value: string }[] = [];
   
-  for (const [name, value] of cookies.entries()) {
-    if (name.startsWith('a_session_')) {
-      sessionCookies.push({ name, value: value.value });
+  // Iterate through cookies
+  cookies.getAll().forEach(cookie => {
+    if (cookie.name.startsWith('a_session_')) {
+      sessionCookies.push({ name: cookie.name, value: cookie.value });
     }
-  }
+  });
   
   return sessionCookies.length > 0 ? sessionCookies : null;
 }

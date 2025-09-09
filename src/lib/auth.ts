@@ -74,7 +74,7 @@ export class AuthService {
           isActive: true,
           permissions: AuthService.getDefaultPermissions(userData.role)
         }
-      ) as User;
+      ) as unknown as User;
 
       return { user, userProfile };
     } catch (error) {
@@ -98,7 +98,7 @@ export class AuthService {
       );
 
       if (userProfile.documents.length > 0) {
-        const profile = userProfile.documents[0] as User;
+        const profile = userProfile.documents[0] as unknown as User;
         return {
           ...user,
           role: profile.role,
@@ -150,7 +150,7 @@ export class AuthService {
       );
 
       if (userProfile.documents.length > 0) {
-        const profile = userProfile.documents[0] as User;
+        const profile = userProfile.documents[0] as unknown as User;
         return profile.role;
       }
 
@@ -233,8 +233,8 @@ export class AuthService {
       );
 
       if (userProfile.documents.length > 0) {
-        const profile = userProfile.documents[0] as User;
-        return profile.permissions.includes(permission);
+        const profile = userProfile.documents[0] as unknown as User;
+        return (profile as any).permissions?.includes(permission) || false;
       }
 
       return false;
