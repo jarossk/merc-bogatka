@@ -3,13 +3,14 @@ import React from 'react';
 const Header: React.FC = () => (
   <header className="bg-background border-b border-border sticky top-0 z-50">
     <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div className="flex items-center space-x-3">
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" 
-          alt="Mercedes-Benz Logo" 
-          className="h-8 w-8"
-        />
-        <h1 className="text-xl font-bold text-primary">Merc Auto Bogatka</h1>
+      <div className="flex items-center">
+        <h1 className="font-bold tracking-wide font-mono flex items-center">
+          <div className="relative mr-2">
+            <div className="w-1 h-6 bg-orange-500 rotate-12 absolute"></div>
+            <div className="w-1 h-6 bg-orange-500 rotate-12 ml-1.5"></div>
+          </div>
+          <span className="text-black text-3xl font-black uppercase tracking-wider">AUTOBOGATKA</span>
+        </h1>
       </div>
       
       <div className="hidden md:flex space-x-6">

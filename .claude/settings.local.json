@@ -11,7 +11,13 @@
       "Bash(git push:*)",
       "Bash(pnpm add:*)",
       "Bash(npx shadcn:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(pnpm biome:check:*)",
+      "Bash(pnpm type-check:*)",
+      "Bash(pnpm lint:*)",
+      "Read(//c/Users/Jarek/Code/spec-kit-projects/old_project_backup/**)",
+      "Bash(pnpm dev:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
