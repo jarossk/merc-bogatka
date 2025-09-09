@@ -59,11 +59,11 @@
 - [x] **T026** [P] Contract test PUT /api/jobs/:id/complete in `tests/contract/job-complete.test.ts`
 
 ## Phase 3.4: Integration Tests (TDD - User Stories)
-- [ ] **T027** [P] Integration test service advisor booking creation workflow in `tests/integration/advisor-booking.test.ts`
-- [ ] **T028** [P] Integration test technician checklist completion in `tests/integration/technician-workflow.test.ts`
-- [ ] **T029** [P] Integration test customer approval process in `tests/integration/customer-approval.test.ts`
-- [ ] **T030** [P] Integration test OEM service record generation in `tests/integration/service-record.test.ts`
-- [ ] **T031** [P] Integration test real-time notifications in `tests/integration/realtime-updates.test.ts`
+- [x] **T027** [P] Integration test service advisor booking creation workflow in `tests/integration/advisor-booking.test.ts`
+- [x] **T028** [P] Integration test technician checklist completion in `tests/integration/technician-workflow.test.ts`
+- [x] **T029** [P] Integration test customer approval process in `tests/integration/customer-approval.test.ts`
+- [x] **T030** [P] Integration test OEM service record generation in `tests/integration/service-record.test.ts`
+- [x] **T031** [P] Integration test real-time notifications in `tests/integration/realtime-updates.test.ts`
 
 ## Phase 3.5: Core Implementation (ONLY after tests are failing)
 
