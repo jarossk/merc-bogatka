@@ -17,7 +17,9 @@
       "Bash(pnpm lint:*)",
       "Read(//c/Users/Jarek/Code/spec-kit-projects/old_project_backup/**)",
       "Bash(pnpm dev:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm list:*)"
     ],
     "deny": [],
     "ask": []
