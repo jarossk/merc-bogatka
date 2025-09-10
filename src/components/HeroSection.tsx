@@ -1,13 +1,5 @@
 import React from 'react';
 
-const MercedesLogo = () => (
-  <img 
-    src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" 
-    alt="Mercedes-Benz Logo" 
-    className="h-11 w-11"
-  />
-);
-
 const HeroSection: React.FC = () => (
   <div className="relative isolate overflow-hidden bg-background">
     <svg className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-border" aria-hidden="true">
@@ -20,7 +12,6 @@ const HeroSection: React.FC = () => (
     </svg>
     <div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-40">
       <div className="mx-auto max-w-2xl lg:mx-0 lg:shrink-0 lg:pt-8">
-        <MercedesLogo />
         <div className="mt-24 sm:mt-32 lg:mt-16">
           <div className="inline-flex space-x-6">
             <span className="rounded-full bg-primary/10 px-3 py-1 text-sm/6 font-semibold text-primary ring-1 ring-primary/10 ring-inset">
@@ -59,7 +50,7 @@ const HeroSection: React.FC = () => (
             <img 
               src="/garage-car-front.png" 
               alt="Merc Auto Bogatka - Front warsztat Mercedes-Benz" 
-              className="w-[304px] rounded-md shadow-2xl ring-1 ring-border opacity-60 hover:opacity-90 transition-all duration-500 ease-in-out transform hover:scale-105 hover:rotate-1" 
+              className="w-full max-w-[500px] lg:w-[500px] rounded-md shadow-2xl ring-1 ring-border opacity-60 hover:opacity-90 transition-all duration-500 ease-in-out transform hover:scale-105 hover:rotate-1" 
             />
           </div>
         </div>

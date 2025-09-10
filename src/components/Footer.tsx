@@ -6,9 +6,9 @@ const Footer: React.FC = () => (
       <div className="xl:grid xl:grid-cols-3 xl:gap-8">
         <div className="space-y-8">
           <img 
-            className="h-9" 
-            src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" 
-            alt="Mercedes-Benz Garage" 
+            className="h-12 w-auto" 
+            src="/logo_bogatka.png" 
+            alt="Bogatka Garage" 
           />
           <p className="text-sm text-gray-400 text-left">
             Premium serwis Mercedes-Benz, części i ekspertyza. Twój zaufany specjalistyczny warsztat.

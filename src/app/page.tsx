@@ -6,7 +6,7 @@ import FinalCTASection from "@/components/FinalCTASection";
 
 const serviceHighlights = [
   {
-    image: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=200&q=80',
+    image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=200&q=80',
     title: 'Konserwacja rutynowa',
     description: 'Utrzymaj swój Mercedes-Benz w sprawności dzięki regularnym przeglądom i wymianom oleju.',
     buttonText: 'Dowiedz się więcej',

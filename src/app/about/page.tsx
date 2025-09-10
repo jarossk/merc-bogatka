@@ -11,25 +11,25 @@ import {
 
 const team = [
   {
-    name: "Piotr Kowalski",
-    role: "Mistrz Mechanik",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Bogdan Taraszkiewicz",
+    role: "Właściciel & Główny Mechanik",
+    image: "/bodzio.png",
     experience: "15+ lat z certyfikatem Mercedes-Benz",
     specialization: "Diagnostyka silnika i wydajność AMG",
   },
   {
-    name: "Anna Nowak",
+    name: "Anna Mudlaff",
     role: "Doradca Serwisowy",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    image: "/anna.png",
     experience: "8 lat w branży motoryzacyjnej",
     specialization: "Relacje z klientami i planowanie serwisu",
   },
   {
-    name: "Marek Wiśniewski",
-    role: "Specjalista ds. Części",
-    image: "https://randomuser.me/api/portraits/men/65.jpg",
+    name: "Jarosław Klata",
+    role: "Specjalista IT",
+    image: "/jarek.png",
     experience: "12 lat ekspertyzy w częściach OEM",
-    specialization: "Oryginalne części i zarządzanie magazynem",
+    specialization: "Oryginalne części i zarządzanie witrynami",
   },
 ];
 
@@ -181,7 +181,7 @@ export default function AboutPage() {
         {/* Why Choose Us */}
         <div className="bg-white rounded-lg shadow-sm p-8 mb-16">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Dlaczego Wybrać Merc Auto Bogatka?
+            Dlaczego Wybrać Auto Bogatka?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
@@ -192,7 +192,7 @@ export default function AboutPage() {
                 25+ Lat Doświadczenia
               </h3>
               <p className="text-gray-600">
-                Ćwierć wieku ekspertyzy Mercedes-Benz i zaufania klientów
+                Ćwierć wieku ekspertyzy Mercedes i zaufania klientów
               </p>
             </div>
             <div className="text-center">

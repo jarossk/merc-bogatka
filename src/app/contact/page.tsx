@@ -1,38 +1,40 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Integrate with contact form backend
-    alert('Dziękujemy za wiadomość! Wkrótce się z Tobą skontaktujemy.');
+    alert("Dziękujemy za wiadomość! Wkrótce się z Tobą skontaktujemy.");
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
     });
   };
 
@@ -45,8 +47,9 @@ export default function ContactPage() {
             Skontaktuj się z Merc Auto Bogatka
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Skontaktuj się z naszymi specjalistami Mercedes-Benz. Jesteśmy tutaj, aby pomóc we wszystkich 
-            potrzebach serwisowych, zapytaniach o części i pytaniach technicznych.
+            Skontaktuj się z naszymi specjalistami Mercedes-Benz. Jesteśmy
+            tutaj, aby pomóc we wszystkich potrzebach serwisowych, zapytaniach o
+            części i pytaniach technicznych.
           </p>
         </div>
 
@@ -55,7 +58,9 @@ export default function ContactPage() {
           <div className="space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">Skontaktuj się z nami</CardTitle>
+                <CardTitle className="text-2xl">
+                  Skontaktuj się z nami
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start space-x-4">
@@ -65,8 +70,10 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg">Adres</h3>
                     <p className="text-gray-600">
-                      Bogatka 18<br/>
-                      Bogatka<br/>
+                      Bogatka 18
+                      <br />
+                      Bogatka
+                      <br />
                       Poland
                     </p>
                   </div>
@@ -79,9 +86,29 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg">Telefon</h3>
                     <p className="text-gray-600">
-                      Główny: <a href="tel:+48508874122" className="text-blue-600 hover:underline">+48 508 874 122</a><br/>
-                      Serwis: <a href="tel:+48508874122" className="text-blue-600 hover:underline">+48 508 874 122</a><br/>
-                      Pomoc: <a href="tel:+48508874122" className="text-blue-600 hover:underline">+48 508 874 122</a>
+                      Główny:{" "}
+                      <a
+                        href="tel:+48508874122"
+                        className="text-blue-600 hover:underline"
+                      >
+                        +48 508 874 122
+                      </a>
+                      <br />
+                      Serwis:{" "}
+                      <a
+                        href="tel:+48508874122"
+                        className="text-blue-600 hover:underline"
+                      >
+                        +48 508 874 122
+                      </a>
+                      <br />
+                      Pomoc:{" "}
+                      <a
+                        href="tel:+48508874122"
+                        className="text-blue-600 hover:underline"
+                      >
+                        +48 508 874 122
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -93,9 +120,29 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg">E-mail</h3>
                     <p className="text-gray-600">
-                      Główny: <a href="mailto:bogdan746@wp.pl" className="text-blue-600 hover:underline">bogdan746@wp.pl</a><br/>
-                      Serwis: <a href="mailto:bogdan746@wp.pl" className="text-blue-600 hover:underline">bogdan746@wp.pl</a><br/>
-                      Części: <a href="mailto:bogdan746@wp.pl" className="text-blue-600 hover:underline">bogdan746@wp.pl</a>
+                      Główny:{" "}
+                      <a
+                        href="mailto:bogdan746@wp.pl"
+                        className="text-blue-600 hover:underline"
+                      >
+                        bogdan746@wp.pl
+                      </a>
+                      <br />
+                      Serwis:{" "}
+                      <a
+                        href="mailto:bogdan746@wp.pl"
+                        className="text-blue-600 hover:underline"
+                      >
+                        bogdan746@wp.pl
+                      </a>
+                      <br />
+                      Części:{" "}
+                      <a
+                        href="mailto:bogdan746@wp.pl"
+                        className="text-blue-600 hover:underline"
+                      >
+                        bogdan746@wp.pl
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -107,10 +154,15 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg">Godziny Otwarcia</h3>
                     <p className="text-gray-600">
-                      Poniedziałek - Piątek: 7:00 - 18:00<br/>
-                      Sobota: 8:00 - 14:00<br/>
-                      Niedziela: Nieczynne<br/>
-                      <span className="text-red-600 font-medium">Serwis awaryjny dostępny 24/7</span>
+                      Poniedziałek - Piątek: 7:00 - 18:00
+                      <br />
+                      Sobota: 8:00 - 14:00
+                      <br />
+                      Niedziela: Nieczynne
+                      <br />
+                      <span className="text-red-600 font-medium">
+                        Serwis awaryjny dostępny 24/7
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -123,13 +175,20 @@ export default function ContactPage() {
                 <CardTitle>Lokalizacja</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-                  {/* Placeholder for Google Maps integration */}
-                  <div className="text-center">
-                    <span className="text-4xl mb-2 block">🗺️</span>
-                    <p>Interaktywna Mapa</p>
-                    <p className="text-sm">(Integracja z Google Maps wkrótce)</p>
+                <div className="w-full h-64 rounded-lg overflow-hidden relative">
+                  <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                    <p className="font-semibold text-gray-800">
+                      Interaktywna Mapa
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      (Integracja z Google Maps wkrótce)
+                    </p>
                   </div>
+                  <img
+                    src="/bootaka_map.png"
+                    alt="Mapa lokalizacji Merc Auto Bogatka"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -144,7 +203,10 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Imię i Nazwisko *
                     </label>
                     <Input
@@ -158,7 +220,10 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Numer Telefonu
                     </label>
                     <Input
@@ -173,7 +238,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Adres E-mail *
                   </label>
                   <Input
@@ -188,7 +256,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Temat *
                   </label>
                   <Input
@@ -203,7 +274,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Wiadomość *
                   </label>
                   <Textarea
@@ -225,7 +299,8 @@ export default function ContactPage() {
                 </Button>
 
                 <p className="text-sm text-gray-500 text-center">
-                  * Pola wymagane. Zazwyczaj odpowiadamy w ciągu 2-4 godzin roboczych.
+                  * Pola wymagane. Zazwyczaj odpowiadamy w ciągu 2-4 godzin
+                  roboczych.
                 </p>
               </form>
             </CardContent>
@@ -236,12 +311,16 @@ export default function ContactPage() {
         <div className="mt-16">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-center">Obszary Obsługi i Pomoc Awaryjna</CardTitle>
+              <CardTitle className="text-2xl text-center">
+                Obszary Obsługi i Pomoc Awaryjna
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Obszary Obsługi</h3>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Obszary Obsługi
+                  </h3>
                   <ul className="space-y-2 text-gray-600">
                     <li>• Gdańsk i okolice</li>
                     <li>• Mobilne usługi diagnostyczne</li>
@@ -251,12 +330,14 @@ export default function ContactPage() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Usługi Awaryjne</h3>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Usługi Awaryjne
+                  </h3>
                   <ul className="space-y-2 text-gray-600">
                     <li>• Pomoc drogowa 24/7</li>
-                    <li>• Odładowanie akumulatora i wymiana</li>
+                    <li>• Ładowanie akumulatora i wymiana</li>
                     <li>• Awaryjne otwieranie pojazdu</li>
-                    <li>• Naprawa i wymiana opon</li>
+                    <li>• Naprawa i wymiana skrzyni biegów</li>
                     <li>• Awaryjna diagnostyka</li>
                   </ul>
                 </div>
